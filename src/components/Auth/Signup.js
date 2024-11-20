@@ -1,41 +1,76 @@
 import React, { useState } from "react";
-import { api } from "../../../../src/services/api";
+import { useNavigate } from "react-router-dom";
+import { TextField, Button, Typography, Box } from "@mui/material";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
+
     try {
-      await api.post("/auth/signup", { email, password });
-      setMessage("Signup successful! Please login.");
+      const response = await fetch("http://127.0.0.1:8000/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        alert("Signup successful! Please log in.");
+        navigate("/"); // Redirect to login
+      } else {
+        const data = await response.json();
+        setError(data.detail || "Signup failed. Please try again.");
+      }
     } catch (err) {
-      setMessage("Signup failed.");
+      setError("Network error. Please ensure the backend is running.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
-      {message && <p>{message}</p>}
+    <Box sx={{ maxWidth: 400, margin: "auto", mt: 5 }}>
+      <Typography variant="h5" sx={{ mb: 3 }}>
+        Signup
+      </Typography>
+      {error && <Typography color="error" sx={{ mb: 2 }}>{error}</Typography>}
       <form onSubmit={handleSignup}>
-        <input
+        <TextField
+          label="Email"
           type="email"
-          placeholder="Email"
+          fullWidth
+          required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          sx={{ mb: 2 }}
         />
-        <input
+        <TextField
+          label="Password"
           type="password"
-          placeholder="Password"
+          fullWidth
+          required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          sx={{ mb: 2 }}
         />
-        <button type="submit">Signup</button>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          disabled={loading}
+        >
+          {loading ? "Signing Up..." : "Signup"}
+        </Button>
       </form>
-    </div>
+    </Box>
   );
 };
 
