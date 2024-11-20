@@ -1,16 +1,14 @@
 import React from "react";
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar, Box } from "@mui/material";
 import { Routes, Route, Link } from "react-router-dom";
-import ResumeUpload from "./ResumeUpload";
-import JobDescriptionUpload from "./JobDescriptionUpload";
-import ATSAnalysis from "./ATSAnalysis";
-import UploadFileIcon from "@mui/icons-material/UploadFile";
-import DescriptionIcon from "@mui/icons-material/Description";
-import AssessmentIcon from "@mui/icons-material/Assessment";
+import { Drawer, List, ListItem, ListItemText, Toolbar, Box, Typography } from "@mui/material";
+import ResumeUpload from "./ResumeUpload"; // Import the ResumeUpload component
+import JobDescriptionUpload from "./JobDescriptionUpload"; // Placeholder for additional features
+import ATSAnalysis from "./ATSAnalysis"; // Placeholder for ATS analysis feature
 
 const Dashboard = () => {
   return (
     <Box sx={{ display: "flex" }}>
+      {/* Sidebar Navigation */}
       <Drawer
         variant="permanent"
         sx={{
@@ -22,31 +20,30 @@ const Dashboard = () => {
         <Toolbar />
         <List>
           <ListItem button component={Link} to="/dashboard/resume-upload">
-            <ListItemIcon>
-              <UploadFileIcon />
-            </ListItemIcon>
             <ListItemText primary="Upload Resume" />
           </ListItem>
           <ListItem button component={Link} to="/dashboard/job-description-upload">
-            <ListItemIcon>
-              <DescriptionIcon />
-            </ListItemIcon>
             <ListItemText primary="Submit Job Description" />
           </ListItem>
           <ListItem button component={Link} to="/dashboard/ats-analysis">
-            <ListItemIcon>
-              <AssessmentIcon />
-            </ListItemIcon>
             <ListItemText primary="ATS Analysis" />
           </ListItem>
         </List>
       </Drawer>
+
+      {/* Content Area */}
       <Box sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
+        <Typography variant="h4" sx={{ mb: 3 }}>
+          Dashboard
+        </Typography>
         <Routes>
-          <Route path="/dashboard/resume-upload" element={<ResumeUpload />} />
-          <Route path="/dashboard/job-description-upload" element={<JobDescriptionUpload />} />
-          <Route path="/dashboard/ats-analysis" element={<ATSAnalysis />} />
+          {/* Route for Upload Resume */}
+          <Route path="/resume-upload" element={<ResumeUpload />} />
+          {/* Route for Job Description Submission */}
+          <Route path="/job-description-upload" element={<JobDescriptionUpload />} />
+          {/* Route for ATS Analysis */}
+          <Route path="/ats-analysis" element={<ATSAnalysis />} />
         </Routes>
       </Box>
     </Box>
