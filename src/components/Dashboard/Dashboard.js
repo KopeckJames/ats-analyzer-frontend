@@ -3,7 +3,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import { Drawer, List, ListItem, ListItemText, Toolbar, Box, Typography } from "@mui/material";
 import ResumeUpload from "./ResumeUpload"; // Import the ResumeUpload component
 import JobDescriptionUpload from "./JobDescriptionUpload"; // Placeholder for additional features
-import ATSAnalysis from "./ATSAnalysis"; // Placeholder for ATS analysis feature
+import ATSAnalysis from "./ATSAnalysis";
 
 const Dashboard = () => {
   return (
